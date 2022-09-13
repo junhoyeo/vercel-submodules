@@ -1,6 +1,5 @@
 ![Vercel Submodules](./vercel-submodules.svg)
 
-
 <h1>
 <code>vercel-submodules</code>: <br />
 The CLI to handle <br />
@@ -22,15 +21,16 @@ Go to the [**Build & Development Settings** section](https://vercel.com/docs/con
 npx vercel-submodules --all
 ```
 
-This command clones all submodules inside the repository.
+This clones all submodules inside the repository.
 
-## Clone selected Submodules
+## Clone only specific Submodules
 
 ```
 npx vercel-submodules --paths packages/module-a ./packages/module-b docs
 ```
 
 This command above will clone submodules with the following `path`:
+
 - `./packages/module-a`
 - `./packages/module-b`
 - `./docs`
@@ -41,13 +41,14 @@ This command above will clone submodules with the following `path`:
 npx vercel-submodules --depth 10
 ```
 
-Default value is `1`
+Default value is `1`.
 
 ## Token
 
 ```
 npx vercel-submodules --token 7777777141f111cf9f0308a63dbd9d0cad3010c4
 ```
-> FYI, that's my Ethereum address
 
-Default value is `$GITHUB_TOKEN`
+> FYI, that's my [Ethereum address](https://etherscan.io/enslookup-search?search=junhoyeo.eth) 💎
+
+Default value is `$GITHUB_TOKEN`.
