@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { exit } from 'process';
 
 import { help } from './commands/help.js';
@@ -40,6 +41,17 @@ const main = async () => {
   } else {
     githubToken = process.env.GITHUB_TOKEN || '';
   }
+
+  let depth: number = 1;
+  if (parsedOptions.depth?.[0]) {
+    depth = Number(parsedOptions.depth[0]);
+  }
+  if (depth < 1) {
+    throw new Error('git commit history depth must be greater than 0');
+  }
 };
 
-main();
+main().catch((error) => {
+  console.error(`${chalk.red(`Error!`)} ${error.message}\n`);
+  exit(1);
+});
