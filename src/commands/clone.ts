@@ -1,4 +1,6 @@
 import chalk from 'chalk';
+// @ts-ignore
+import GitUrlParse from 'git-url-parse';
 import path from 'path';
 import * as zx from 'zx';
 
@@ -16,6 +18,12 @@ const insideDir = async (path: string, callback: () => Promise<void>) => {
   }
 };
 
+const convertToAuthURL = (url: string, githubToken: string): string => {
+  const parsed = GitUrlParse(url);
+  parsed.token = githubToken;
+  return GitUrlParse.stringify(parsed, 'https');
+};
+
 type CloneOptions = {
   githubToken: string;
   depth: number;
@@ -26,6 +34,7 @@ export const clone = async ({ githubToken, depth, submodules }: CloneOptions) =>
 
   for (const submodule of submodules) {
     const submoduleDir = path.join(rootDir, submodule.path);
+    const submoduleURL = !!githubToken ? convertToAuthURL(submodule.url, githubToken) : submodule.url;
 
     await zx.$`rm -rf ${submoduleDir}`.catch(() => {
       /* ignored */
@@ -37,9 +46,9 @@ export const clone = async ({ githubToken, depth, submodules }: CloneOptions) =>
     await insideDir(submoduleDir, async () => {
       await zx.$`git init`;
       try {
-        await zx.$`git remote add origin ${submodule.url}`;
+        await zx.$`git remote add origin ${submoduleURL}`;
       } catch {
-        await zx.$`git remote set-url origin ${submodule.url}`;
+        await zx.$`git remote set-url origin ${submoduleURL}`;
       }
       await zx.$`git fetch origin ${submodule.commitHash} --depth=${depth} --no-tags`;
       await zx.$`git reset --hard FETCH_HEAD`;
