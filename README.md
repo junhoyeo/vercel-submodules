@@ -15,7 +15,7 @@
 
 > **@vercel** [Support for private git submodules #44](https://github.com/orgs/vercel/discussions/44)
 
-With Git Submodules, you can add other repositories as a subdirectory of another repository. The [`experimental.externalDir` option in Next.js](https://github.com/vercel/next.js/pull/22867) option in Next.js makes it even more magical by directly transpiling external libraries.
+With Git Submodules, you can add other repositories as a subdirectory of another repository. The [`experimental.externalDir` option in Next.js](https://github.com/vercel/next.js/pull/22867) makes it even more magical by directly transpiling external libraries.
 
 However, Vercel does not support private Git Submodules for now. There have been many community-made workarounds, like [calling Vercel CLI inside GitHub Actions](https://github.com/vercel/community/discussions/44#discussioncomment-22319) (not a fundamental solution) or [using shell scripts](https://github.com/beeinger/vercel-private-submodule) (it works, but it cannot fit general needs like cloning multiple repositories, auto-response for newly added submodules), having their own set of limitations.
 
