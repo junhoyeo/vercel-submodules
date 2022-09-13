@@ -15,13 +15,13 @@ With Git Submodules, you can add other repositories as a subdirectory of another
 
 However, Vercel does not support private Git Submodules for now. There have been many community-made workarounds introduced. [Calling Vercel CLI inside GitHub Actions](https://github.com/vercel/community/discussions/44#discussioncomment-22319) — not a fundamental solution. [Shell script](https://github.com/beeinger/vercel-private-submodule) — working, but cannot fit general needs(e.g., cloning multiple repositories, auto-response for newly added submodules)
 
-## Installation and Usage
+## 📦 Installation and Usage
 
 ```
 yarn add -D vercel-submodules
 ```
 
-Go to the [**Build & Development Settings** section](https://vercel.com/docs/concepts/deployments/configure-a-build#build-and-development-settings) and override **Build Command** with `vercel-submodules --all && (...)`. Such as `npx vercel-submodules --all && yarn build`.
+Go to the [**Build & Development Settings** section](https://vercel.com/docs/concepts/deployments/configure-a-build#build-and-development-settings) and override **Build Command** with `vercel-submodules --all && (...)`. Such as `vercel-submodules --all && yarn build`.
 
 ## Clone all Submodules
 
@@ -51,7 +51,7 @@ npx vercel-submodules --depth 10
 
 Default value is `1`.
 
-## Token
+## Set GitHub Token
 
 ```
 npx vercel-submodules --token 7777777141f111cf9f0308a63dbd9d0cad3010c4
