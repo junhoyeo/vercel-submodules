@@ -10,7 +10,9 @@
     "build": "tsc",
     "start": "node lib/index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "zx": "^7.0.8"
+  },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
     "@types/node": "^18.7.17",

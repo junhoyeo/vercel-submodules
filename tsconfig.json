@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "ES2020",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "lib": ["ESNext"],
     "declaration": true,
     "outDir": "lib",

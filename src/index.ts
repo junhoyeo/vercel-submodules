@@ -1,7 +1,9 @@
 import chalk from 'chalk';
 import { exit } from 'process';
 
+import { clone } from './commands/clone.js';
 import { help } from './commands/help.js';
+import { fetchSubmodules } from './utils/submodules.js';
 
 const OPTIONS = {
   '-h': 'help',
@@ -49,6 +51,9 @@ const main = async () => {
   if (depth < 1) {
     throw new Error('git commit history depth must be greater than 0');
   }
+
+  const submodules = await fetchSubmodules();
+  clone({ githubToken, depth, submodules });
 };
 
 main().catch((error) => {
