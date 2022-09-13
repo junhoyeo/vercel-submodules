@@ -12,8 +12,13 @@ export const fetchSubmodules = async (): Promise<Submodule[]> => {
   const submodules = await Promise.all(
     output.stdout
       .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line.length > 0)
+      .flatMap((rawLine) => {
+        const line = rawLine.trim();
+        if (line.length > 0) {
+          return line;
+        }
+        return [];
+      })
       .map(async (line) => {
         let [commitHash, path] = line.split(' ');
         if (commitHash.startsWith('-')) {
