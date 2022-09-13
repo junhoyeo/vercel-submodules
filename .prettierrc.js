@@ -3,7 +3,16 @@ module.exports = {
   jsxBracketSameLine: false,
   singleQuote: true,
   trailingComma: 'all',
+  printWidth: 80,
   semi: true,
+  overrides: [
+    {
+      files: 'src/commands/*',
+      options: {
+        printWidth: 150,
+      },
+    },
+  ],
 
   // @ianvs/prettier-plugin-sort-imports
   importOrder: [
