@@ -1,9 +1,12 @@
 import chalk from 'chalk';
 import { exit } from 'process';
+import * as zx from 'zx';
 
 import { clone } from './commands/clone.js';
 import { help } from './commands/help.js';
 import { fetchSubmodules } from './utils/submodules.js';
+
+zx.$.verbose = false;
 
 const OPTIONS = {
   '-h': 'help',
@@ -53,10 +56,10 @@ const main = async () => {
   }
 
   const submodules = await fetchSubmodules();
-  clone({ githubToken, depth, submodules });
+  await clone({ githubToken, depth, submodules });
 };
 
 main().catch((error) => {
-  console.error(`${chalk.red(`Error!`)} ${error.message}\n`);
+  console.error(`${chalk.red(`Error!`)} ${error.message}`);
   exit(1);
 });

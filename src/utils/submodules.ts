@@ -1,7 +1,5 @@
 import * as zx from 'zx';
 
-zx.$.verbose = false;
-
 export type Submodule = {
   commitHash: string;
   path: string;
