@@ -1,0 +1,8 @@
+{
+  "name": "vercel-submodules",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/junhoyeo/vercel-submodules",
+  "author": "Junho Yeo <i@junho.io>",
+  "license": "MIT"
+}
