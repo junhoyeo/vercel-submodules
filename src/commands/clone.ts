@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-// @ts-ignore
 import GitUrlParse from 'git-url-parse';
 import path from 'path';
 import * as zx from 'zx';
