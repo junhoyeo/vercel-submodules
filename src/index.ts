@@ -6,11 +6,11 @@ import { clone } from './commands/clone.js';
 import { help } from './commands/help.js';
 import { fetchSubmodules } from './utils/submodules.js';
 
-zx.$.verbose = false;
-
 const OPTIONS = {
   '-h': 'help',
   '--help': 'help',
+  '-v': 'verbose',
+  '--verbose': 'verbose',
   '--all': 'all',
   '--paths': 'paths',
   '--depth': 'depth',
@@ -39,6 +39,8 @@ const main = async () => {
     help();
     exit(0);
   }
+
+  zx.$.verbose = !!parsedOptions.verbose;
 
   let githubToken: string = '';
   if (parsedOptions.token?.[0]) {

@@ -7,6 +7,8 @@ The CLI to handle <br />
 in your <strong><a href="https://vercel.com/home">Vercel</a> Project</strong>
 </h1>
 
+> This project is community-driven and not affiliated with Vercel in any way. However, I'd love to contribute!
+
 ## The Status Quo
 
 > **@vercel** [Support for private git submodules #44](https://github.com/orgs/vercel/discussions/44)

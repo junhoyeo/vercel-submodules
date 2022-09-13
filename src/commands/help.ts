@@ -11,6 +11,7 @@ export const help = () => {
   ${chalk.dim('Options:')}
 
     -h, --help                Output usage information
+    -v, --verbose             Enable verbose mode
     --all                     Clone all submodules inside the repository
     --paths ${prop('SUBMODULE_PATHS')}   Clone only specific Submodules with the provided ${code('path')})
     --depth ${prop('CLONE_DEPTH')}       Configure the clone depth (default: ${code('1')})
