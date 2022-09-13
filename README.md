@@ -9,6 +9,13 @@
   </strong>
 </h1>
 
+<a aria-label="npm version" href="https://www.npmjs.com/package/vercel-submodules">
+  <img alt="" src="https://badgen.net/npm/v/vercel-submodules">
+</a>
+<a aria-label="License" href="https://github.com/junhoyeo/vercel-submodules/blob/main/LICENSE">
+  <img alt="" src="https://badgen.net/npm/license/vercel-submodules">
+</a>
+
 > This project is community-driven and not affiliated with Vercel in any way. However, I'd love to contribute!
 
 ## The Status Quo
