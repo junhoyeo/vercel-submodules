@@ -25,6 +25,8 @@ yarn add -D vercel-submodules
 
 Go to the [**Build & Development Settings** section](https://vercel.com/docs/concepts/deployments/configure-a-build#build-and-development-settings) and override **Build Command** with `vercel-submodules --all && (...)`. Such as `vercel-submodules --all && yarn build`.
 
+Once configured, `vercel-submodules` take care of everything. It automatically detects all submodules(or only configured ones) and indicated commit hashes. You don't have to update anything again.
+
 ## Clone all Submodules
 
 ```
