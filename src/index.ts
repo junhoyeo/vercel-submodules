@@ -35,7 +35,7 @@ const main = async () => {
     }
   });
 
-  if (parsedOptions.help) {
+  if (parsedOptions.help || Object.values(parsedOptions).length === 0) {
     help();
     exit(0);
   }
