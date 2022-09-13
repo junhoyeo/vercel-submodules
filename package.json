@@ -1,8 +1,20 @@
 {
   "name": "vercel-submodules",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "repository": "https://github.com/junhoyeo/vercel-submodules",
   "author": "Junho Yeo <i@junho.io>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node lib/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^3.4.2",
+    "@types/node": "^18.7.17",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
+  }
 }
