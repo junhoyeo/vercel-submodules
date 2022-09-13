@@ -17,6 +17,7 @@
     "start": "node lib/index.js"
   },
   "dependencies": {
+    "git-url-parse": "^13.0.0",
     "zx": "^7.0.8"
   },
   "devDependencies": {
