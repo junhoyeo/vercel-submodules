@@ -57,7 +57,10 @@ const main = async () => {
     throw new Error('git commit history depth must be greater than 0');
   }
 
-  const submodules = await fetchSubmodules();
+  const specificPaths = parsedOptions.paths ?? [];
+  const submodules = await fetchSubmodules({
+    paths: specificPaths.length > 0 ? specificPaths : null,
+  });
   await clone({ githubToken, depth, submodules });
 };
 
