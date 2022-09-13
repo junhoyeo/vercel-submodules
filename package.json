@@ -1,7 +1,7 @@
 {
   "name": "vercel-submodules",
   "description": "The CLI to handle Private Git Submodules in your Vercel Project",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,7 +9,7 @@
   "author": "Junho Yeo <i@junho.io>",
   "license": "MIT",
   "bin": {
-    "vercel-submodules": "./bin/run"
+    "vercel-submodules": "./bin/run.js"
   },
   "scripts": {
     "build": "tsc",
