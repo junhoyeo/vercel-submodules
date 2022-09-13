@@ -1,5 +1,6 @@
 {
   "name": "vercel-submodules",
+  "description": "The CLI to handle Private Git Submodules in your Vercel Project",
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
