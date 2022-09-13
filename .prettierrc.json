@@ -1,0 +1,25 @@
+{
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "semi": true,
+  "overrides": [
+    {
+      "files": "src/commands/*",
+      "options": {
+        "printWidth": 150
+      }
+    }
+  ],
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "@/(assets|components|hooks|pages|recoil|styles|utils)/(.*)$",
+    "@/(.*)$",
+    "^[./](.*)$"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"]
+}

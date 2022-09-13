@@ -9,6 +9,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "lint": "prettier --check .",
     "start": "node lib/index.js"
   },
   "dependencies": {
