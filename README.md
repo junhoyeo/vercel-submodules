@@ -1,4 +1,4 @@
-![Vercel Submodules](https://raw.githubusercontent.com/junhoyeo/vercel-submodules/main/docs/images/vercel-submodules.svg)
+[![Vercel Submodules](https://raw.githubusercontent.com/junhoyeo/vercel-submodules/main/docs/images/vercel-submodules.svg)](https://www.npmjs.com/package/vercel-submodules)
 
 <h1>
   <code>vercel-submodules</code>: <br />
@@ -36,7 +36,7 @@ Go to the [**Build & Development Settings** section](https://vercel.com/docs/con
 
 Once configured, `vercel-submodules` take care of everything. It detects the indicated commit hashes with all or configured submodules; you don't have to update anything again!
 
-![Usage information for `vercel-submodules`](https://raw.githubusercontent.com/junhoyeo/vercel-submodules/main/docs/images/usage-information.jpg)
+[![Usage information for `vercel-submodules`](https://raw.githubusercontent.com/junhoyeo/vercel-submodules/main/docs/images/usage-information.jpg)](https://www.npmjs.com/package/vercel-submodules)
 
 ## Clone all Submodules
 
