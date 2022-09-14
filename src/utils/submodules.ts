@@ -1,15 +1,14 @@
-import path from 'path';
+import NodePath from 'path';
 import * as zx from 'zx';
+
+import { haveSamePath, insideDir } from './filesystem.js';
 
 export type Submodule = {
   commitHash: string;
   path: string;
   url: string;
+  gitModulePath: string;
 };
-
-// NOTE: Assumes that current platform is case-sensitive
-const haveSamePath = (haystack: string[], needle: string) =>
-  haystack.some((hay) => path.resolve(hay) === path.resolve(needle));
 
 type FetchSubmodulesOptions = {
   paths: string[] | null;
@@ -17,33 +16,47 @@ type FetchSubmodulesOptions = {
 export const fetchSubmodules = async (
   options: FetchSubmodulesOptions,
 ): Promise<Submodule[]> => {
-  const output = await zx.$`git submodule status --recursive`;
+  const topLevel = (await zx.$`git rev-parse --show-toplevel`).stdout.trim();
+  let output: string = '';
+  await insideDir(topLevel, async () => {
+    output = (await zx.$`git submodule status --recursive`).stdout;
+  });
 
-  const submodules = await Promise.all(
-    output.stdout
-      .split('\n')
-      .flatMap((rawLine) => {
-        const line = rawLine.trim();
-        if (line.length > 0) {
-          let [commitHash, path] = line.split(' ');
-          if (!!options.paths && !haveSamePath(options.paths, path)) {
-            return [];
-          }
-          if (commitHash.startsWith('-')) {
-            commitHash = commitHash.slice(1);
-          }
-          return { commitHash, path };
-        }
+  let submodules: Submodule[] = [];
+
+  const submoduleRefs = output.split('\n').flatMap((rawLine) => {
+    const line = rawLine.trim();
+    if (line.length > 0) {
+      let [commitHash, path] = line.split(' ');
+      if (!!options.paths && !haveSamePath(options.paths, path)) {
         return [];
-      })
-      .map(async ({ commitHash, path }) => {
-        const url =
-          await zx.$`git config --file .gitmodules --get submodule.${path}.url`.then(
-            (output) => output.stdout.trim(),
-          );
-        return { commitHash, path, url };
-      }),
-  );
+      }
+      if (commitHash.startsWith('-')) {
+        commitHash = commitHash.slice(1);
+      }
+      return {
+        commitHash,
+        path: NodePath.join(topLevel, path),
+        gitModulePath: path,
+      };
+    }
+    return [];
+  });
+
+  for (const { commitHash, path, gitModulePath } of submoduleRefs) {
+    await insideDir(topLevel, async () => {
+      let pathName = path.endsWith('/')
+        ? path.substring(0, path.lastIndexOf('/'))
+        : path;
+      pathName = pathName.split('/').slice(-1)[0];
+
+      const url =
+        await zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.url`.then(
+          (output) => output.stdout.trim(),
+        );
+      submodules.push({ commitHash, path, url, gitModulePath });
+    });
+  }
 
   return submodules;
 };
