@@ -1,6 +1,7 @@
+import NodePath from 'path';
 import * as zx from 'zx';
 
-import { haveSamePath } from './filesystem.js';
+import { haveSamePath, insideDir } from './filesystem.js';
 
 export type Submodule = {
   commitHash: string;
@@ -16,31 +17,39 @@ export const fetchSubmodules = async (
 ): Promise<Submodule[]> => {
   const output = await zx.$`git submodule status --recursive`;
 
-  const submodules = await Promise.all(
-    output.stdout
-      .split('\n')
-      .flatMap((rawLine) => {
-        const line = rawLine.trim();
-        if (line.length > 0) {
-          let [commitHash, path] = line.split(' ');
-          if (!!options.paths && !haveSamePath(options.paths, path)) {
-            return [];
-          }
-          if (commitHash.startsWith('-')) {
-            commitHash = commitHash.slice(1);
-          }
-          return { commitHash, path };
-        }
+  let submodules: Submodule[] = [];
+
+  const submoduleRefs = output.stdout.split('\n').flatMap((rawLine) => {
+    const line = rawLine.trim();
+    if (line.length > 0) {
+      let [commitHash, path] = line.split(' ');
+      if (!!options.paths && !haveSamePath(options.paths, path)) {
         return [];
-      })
-      .map(async ({ commitHash, path }) => {
-        const url =
-          await zx.$`git config --file .gitmodules --get submodule.${path}.url`.then(
-            (output) => output.stdout.trim(),
-          );
-        return { commitHash, path, url };
-      }),
-  );
+      }
+      if (commitHash.startsWith('-')) {
+        commitHash = commitHash.slice(1);
+      }
+      return { commitHash, path };
+    }
+    return [];
+  });
+
+  for (const { commitHash, path } of submoduleRefs) {
+    const parentOfSubmodule = NodePath.resolve(path, '..');
+
+    await insideDir(parentOfSubmodule, async () => {
+      let pathName = path.endsWith('/')
+        ? path.substring(0, path.lastIndexOf('/'))
+        : path;
+      pathName = pathName.split('/').slice(-1)[0];
+
+      const url =
+        await zx.$`git config --file .gitmodules --get submodule.${pathName}.url`.then(
+          (output) => output.stdout.trim(),
+        );
+      submodules.push({ commitHash, path, url });
+    });
+  }
 
   return submodules;
 };
