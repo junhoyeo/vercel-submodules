@@ -1,15 +1,12 @@
-import path from 'path';
 import * as zx from 'zx';
+
+import { haveSamePath } from './filesystem.js';
 
 export type Submodule = {
   commitHash: string;
   path: string;
   url: string;
 };
-
-// NOTE: Assumes that current platform is case-sensitive
-const haveSamePath = (haystack: string[], needle: string) =>
-  haystack.some((hay) => path.resolve(hay) === path.resolve(needle));
 
 type FetchSubmodulesOptions = {
   paths: string[] | null;

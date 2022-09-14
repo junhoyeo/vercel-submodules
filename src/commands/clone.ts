@@ -3,19 +3,8 @@ import GitUrlParse from 'git-url-parse';
 import path from 'path';
 import * as zx from 'zx';
 
+import { insideDir } from '../utils/filesystem.js';
 import { Submodule } from '../utils/submodules.js';
-
-const insideDir = async (path: string, callback: () => Promise<void>) => {
-  const pwd = (await zx.$`pwd`).stdout;
-  zx.cd(path);
-  await callback();
-
-  try {
-    zx.cd(pwd);
-  } catch {
-    /* ignored */
-  }
-};
 
 const convertToAuthURL = (url: string, githubToken: string): string => {
   const parsed = GitUrlParse(url);
