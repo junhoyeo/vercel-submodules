@@ -20,7 +20,7 @@
 
 ## The Status Quo
 
-> **@vercel** [Support for private git submodules #44](https://github.com/orgs/vercel/discussions/44)
+> **@vercel** [Support for private Git Submodules #44](https://github.com/orgs/vercel/discussions/44)
 
 With Git Submodules, you can add other repositories as a subdirectory of another repository. The [`experimental.externalDir` option in Next.js](https://github.com/vercel/next.js/pull/22867) makes it even more magical by directly transpiling external libraries.
 
