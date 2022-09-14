@@ -7,6 +7,7 @@ export type Submodule = {
   commitHash: string;
   path: string;
   url: string;
+  gitModulePath: string;
 };
 
 type FetchSubmodulesOptions = {
@@ -15,11 +16,15 @@ type FetchSubmodulesOptions = {
 export const fetchSubmodules = async (
   options: FetchSubmodulesOptions,
 ): Promise<Submodule[]> => {
-  const output = await zx.$`git submodule status --recursive`;
+  const topLevel = (await zx.$`git rev-parse --show-toplevel`).stdout.trim();
+  let output: string = '';
+  await insideDir(topLevel, async () => {
+    output = (await zx.$`git submodule status --recursive`).stdout;
+  });
 
   let submodules: Submodule[] = [];
 
-  const submoduleRefs = output.stdout.split('\n').flatMap((rawLine) => {
+  const submoduleRefs = output.split('\n').flatMap((rawLine) => {
     const line = rawLine.trim();
     if (line.length > 0) {
       let [commitHash, path] = line.split(' ');
@@ -29,25 +34,27 @@ export const fetchSubmodules = async (
       if (commitHash.startsWith('-')) {
         commitHash = commitHash.slice(1);
       }
-      return { commitHash, path };
+      return {
+        commitHash,
+        path: NodePath.join(topLevel, path),
+        gitModulePath: path,
+      };
     }
     return [];
   });
 
-  for (const { commitHash, path } of submoduleRefs) {
-    const parentOfSubmodule = NodePath.resolve(path, '..');
-
-    await insideDir(parentOfSubmodule, async () => {
+  for (const { commitHash, path, gitModulePath } of submoduleRefs) {
+    await insideDir(topLevel, async () => {
       let pathName = path.endsWith('/')
         ? path.substring(0, path.lastIndexOf('/'))
         : path;
       pathName = pathName.split('/').slice(-1)[0];
 
       const url =
-        await zx.$`git config --file .gitmodules --get submodule.${pathName}.url`.then(
+        await zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.url`.then(
           (output) => output.stdout.trim(),
         );
-      submodules.push({ commitHash, path, url });
+      submodules.push({ commitHash, path, url, gitModulePath });
     });
   }
 

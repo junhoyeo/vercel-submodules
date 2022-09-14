@@ -18,10 +18,10 @@ type CloneOptions = {
   submodules: Submodule[];
 };
 export const clone = async ({ githubToken, depth, submodules }: CloneOptions) => {
-  const rootDir = (await zx.$`pwd`).stdout.trim();
+  const topLevel = (await zx.$`git rev-parse --show-toplevel`).stdout.trim();
 
   for (const submodule of submodules) {
-    const submoduleDir = path.join(rootDir, submodule.path);
+    const submoduleDir = path.join(topLevel, submodule.gitModulePath);
     const submoduleURL = !!githubToken ? convertToAuthURL(submodule.url, githubToken) : submodule.url;
 
     await zx.$`rm -rf ${submoduleDir}`.catch(() => {
