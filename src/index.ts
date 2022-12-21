@@ -15,6 +15,7 @@ const OPTIONS = {
   '--paths': 'paths',
   '--depth': 'depth',
   '--token': 'token',
+  '--fg-token': 'fgToken',
 } as const;
 type OptionAlias = keyof typeof OPTIONS;
 type Option = typeof OPTIONS[OptionAlias];
@@ -43,8 +44,12 @@ const main = async () => {
   zx.$.verbose = !!parsedOptions.verbose;
 
   let githubToken: string = '';
+  let isFineGrained: boolean = false;
   if (parsedOptions.token?.[0]) {
     [githubToken] = parsedOptions.token;
+  } else if (parsedOptions.fgToken?.[0]) {
+    [githubToken] = parsedOptions.fgToken;
+    isFineGrained = true;
   } else {
     githubToken = process.env.GITHUB_TOKEN || '';
   }
@@ -61,7 +66,7 @@ const main = async () => {
   const submodules = await fetchSubmodules({
     paths: specificPaths.length > 0 ? specificPaths : null,
   });
-  await clone({ githubToken, depth, submodules });
+  await clone({ githubToken, isFineGrained, depth, submodules });
 };
 
 main().catch((error) => {
