@@ -68,16 +68,22 @@ The default value is `1`.
 
 ## Set GitHub Token
 
-In order to deploy to Vercel, follow these steps:
+## Set GitHub Token
 
-1. [Generate a new GitHub access token](https://github.com/settings/tokens/new),
-2. Add it as an environment variable in Vercel called `GITHUB_TOKEN`.
+You'll need to configure your GitHub token in order to clone private repositories in Vercel. Follow these steps:
+
+1. Go to your [GitHub Developer settings > Personal access tokens](https://github.com/settings/tokens/new).
+2. Click **"Generate new token"**.
+3. Give the token a name and select the **`repo` (Full control of private repositories) permission**.
+4. Click **"Generate token"**. You will then be presented with a token that you can use to authenticate with GitHub.
+5. Add the resulting token as an [Environment Variable in Vercel](https://vercel.com/docs/concepts/projects/environment-variables) called `GITHUB_TOKEN`.
 
 Alternatively, you can explicitly set the token argument:
-```
+
+```bash
 npx vercel-submodules --token 7777777141f111cf9f0308a63dbd9d0cad3010c4
 ```
 
 > FYI, that's my [Ethereum address](https://etherscan.io/enslookup-search?search=junhoyeo.eth) 💎
 
-The default value is `$GITHUB_TOKEN`.
+If the `GITHUB_TOKEN` environment variable is not set, the CLI will attempt to use the default value of `$GITHUB_TOKEN`.
