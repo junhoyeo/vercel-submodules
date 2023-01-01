@@ -68,8 +68,6 @@ The default value is `1`.
 
 ## Set GitHub Token
 
-## Set GitHub Token
-
 You'll need to configure your GitHub token in order to clone private repositories in Vercel. Follow these steps:
 
 1. Go to your [GitHub Developer settings > Personal access tokens](https://github.com/settings/tokens/new).
