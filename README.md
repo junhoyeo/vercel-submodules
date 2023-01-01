@@ -68,6 +68,12 @@ The default value is `1`.
 
 ## Set GitHub Token
 
+In order to deploy to Vercel, follow these steps:
+
+1. [Generate a new GitHub access token](https://github.com/settings/tokens/new),
+2. Add it as an environment variable in Vercel called `GITHUB_TOKEN`.
+
+Alternatively, you can explicitly set the token argument:
 ```
 npx vercel-submodules --token 7777777141f111cf9f0308a63dbd9d0cad3010c4
 ```
