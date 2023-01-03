@@ -85,3 +85,9 @@ npx vercel-submodules --token 7777777141f111cf9f0308a63dbd9d0cad3010c4
 > FYI, that's my [Ethereum address](https://etherscan.io/enslookup-search?search=junhoyeo.eth) 💎
 
 If the `GITHUB_TOKEN` environment variable is not set, the CLI will attempt to use the default value of `$GITHUB_TOKEN`.
+
+You can also use the [new fine-graned PAT](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/) using the `--fg-token` flag, too.
+
+```bash
+npx vercel-submodules --fg-token 7777777141f111cf9f0308a63dbd9d0cad3010c4
+```
