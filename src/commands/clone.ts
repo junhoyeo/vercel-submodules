@@ -6,7 +6,12 @@ import * as zx from 'zx';
 import { insideDir } from '../utils/filesystem.js';
 import { Submodule } from '../utils/submodules.js';
 
-const convertToAuthURL = (url: string, githubToken: string, isFineGrained: boolean): string => {
+type ConvertToAuthURLOptions = {
+  url: string;
+  githubToken: string;
+  isFineGrained: boolean;
+};
+const convertToAuthURL = ({ url, githubToken, isFineGrained }: ConvertToAuthURLOptions): string => {
   const parsed = GitUrlParse(url);
   parsed.token = isFineGrained ? `oauth2:${githubToken}` : githubToken;
   return GitUrlParse.stringify(parsed, 'https');
@@ -23,7 +28,13 @@ export const clone = async ({ githubToken, isFineGrained, depth, submodules }: C
 
   for (const submodule of submodules) {
     const submoduleDir = path.join(topLevel, submodule.gitModulePath);
-    const submoduleURL = !!githubToken ? convertToAuthURL(submodule.url, githubToken, isFineGrained) : submodule.url;
+    const submoduleURL = !githubToken
+      ? submodule.url
+      : convertToAuthURL({
+          url: submodule.url,
+          githubToken,
+          isFineGrained,
+        });
 
     await zx.$`rm -rf ${submoduleDir}`.catch(() => {
       /* ignored */
