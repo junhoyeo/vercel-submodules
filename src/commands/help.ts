@@ -16,6 +16,7 @@ export const help = () => {
     --paths ${prop('SUBMODULE_PATHS')}   Clone only specific submodules with the provided ${code('path')})
     --depth ${prop('CLONE_DEPTH')}       Configure the clone depth (default: ${code('1')})
     --token ${prop('TOKEN')}             Configure the token used for GitHub Authentication (default: ${code('$GITHUB_TOKEN')})
+    --fg-token ${prop('FINE_GRAINED_PAT')}       Configure the fine-grained PAT used for GitHub Authentication (disabled by default)
 
   ${chalk.dim('Examples:')}
 
