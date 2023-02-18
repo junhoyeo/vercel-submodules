@@ -50,7 +50,7 @@ export const clone = async ({ githubToken, isFineGrained, depth, submodules }: C
       } catch {
         await zx.$`git remote set-url origin ${submoduleURL}`;
       }
-      await zx.$`git fetch origin ${submodule.commitHash} --depth=${depth} --no-tags`;
+      await zx.$`git fetch origin ${submodule.branch || submodule.commitHash} --depth=${depth} --no-tags`;
       await zx.$`git reset --hard FETCH_HEAD`;
     });
 

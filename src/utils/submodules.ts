@@ -6,6 +6,7 @@ import { haveSamePath, insideDir } from './filesystem.js';
 export type Submodule = {
   commitHash: string;
   path: string;
+  branch?: string;
   url: string;
   gitModulePath: string;
 };
@@ -50,11 +51,16 @@ export const fetchSubmodules = async (
         : path;
       pathName = pathName.split('/').slice(-1)[0];
 
-      const url =
-        await zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.url`.then(
+      const resolvingBranch =
+        zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.branch`.then(
+          (output) => output.stdout.trim() || undefined,
+        );
+      const resolvingURL =
+        zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.url`.then(
           (output) => output.stdout.trim(),
         );
-      submodules.push({ commitHash, path, url, gitModulePath });
+      const [branch, url] = await Promise.all([resolvingBranch, resolvingURL]);
+      submodules.push({ commitHash, path, branch, url, gitModulePath });
     });
   }
 
