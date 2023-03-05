@@ -52,9 +52,9 @@ export const fetchSubmodules = async (
       pathName = pathName.split('/').slice(-1)[0];
 
       const resolvingBranch =
-        zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.branch`.then(
-          (output) => output.stdout.trim() || undefined,
-        );
+        zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.branch`
+          .then((output) => output.stdout.trim() || undefined)
+          .catch(() => /* if branch is not specified */ undefined);
       const resolvingURL =
         zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.url`.then(
           (output) => output.stdout.trim(),
