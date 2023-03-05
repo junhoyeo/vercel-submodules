@@ -51,15 +51,18 @@ export const fetchSubmodules = async (
         : path;
       pathName = pathName.split('/').slice(-1)[0];
 
-      const resolvingBranch =
-        zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.branch`
-          .then((output) => output.stdout.trim() || undefined)
-          .catch(() => /* if branch is not specified */ undefined);
-      const resolvingURL =
+      const resolvingBranch: Promise<string | undefined> =
+        zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.branch`.then(
+          (output) => output.stdout.trim() || undefined,
+        );
+      const resolvingURL: Promise<string> =
         zx.$`git config --file .gitmodules --get submodule.${gitModulePath}.url`.then(
           (output) => output.stdout.trim(),
         );
-      const [branch, url] = await Promise.all([resolvingBranch, resolvingURL]);
+      const [branch, url] = await Promise.all([
+        resolvingBranch.catch(() => /* if branch is not specified */ undefined),
+        resolvingURL,
+      ]);
       submodules.push({ commitHash, path, branch, url, gitModulePath });
     });
   }
