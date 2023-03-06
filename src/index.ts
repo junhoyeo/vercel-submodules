@@ -18,7 +18,7 @@ const OPTIONS = {
   '--fg-token': 'fgToken',
 } as const;
 type OptionAlias = keyof typeof OPTIONS;
-type Option = typeof OPTIONS[OptionAlias];
+type Option = (typeof OPTIONS)[OptionAlias];
 const isKnownOption = (arg: string): arg is OptionAlias =>
   Object.keys(OPTIONS).includes(arg);
 
