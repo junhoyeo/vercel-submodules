@@ -28,15 +28,17 @@ However, Vercel does not support private Git Submodules for now. There have been
 
 ## 📦 Installation and Usage
 
-```
-yarn add -D vercel-submodules
-```
-
-Go to the [**Build & Development Settings** section](https://vercel.com/docs/concepts/deployments/configure-a-build#build-and-development-settings) and override **Install Command** with `vercel-submodules --all && (...)`. Such as `vercel-submodules --all && yarn install`.
+Go to the [**Build & Development Settings** section](https://vercel.com/docs/concepts/deployments/configure-a-build#build-and-development-settings) and override **Install Command** with `npx vercel-submodules --all && (...)`. Such as `npx vercel-submodules --all && yarn install`.
 
 Once configured, `vercel-submodules` take care of everything. It detects the indicated commit hashes with all or configured submodules; you don't have to update anything again!
 
 [![Usage information for `vercel-submodules`](https://raw.githubusercontent.com/junhoyeo/vercel-submodules/main/docs/images/usage-information.jpg?v=2)](https://www.npmjs.com/package/vercel-submodules)
+
+You can also add the package to your `package.json` if needed:
+
+```
+yarn add -D vercel-submodules
+```
 
 ## Clone all Submodules
 
