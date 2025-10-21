@@ -43,15 +43,22 @@ const main = async () => {
 
   zx.$.verbose = !!parsedOptions.verbose;
 
+  // Helper function to detect if a token is a fine-grained PAT
+  const isFineGrainedToken = (token: string): boolean => {
+    return token.startsWith('github_pat_');
+  };
+
   let githubToken: string = '';
   let isFineGrained: boolean = false;
   if (parsedOptions.token?.[0]) {
     [githubToken] = parsedOptions.token;
+    isFineGrained = isFineGrainedToken(githubToken);
   } else if (parsedOptions.fgToken?.[0]) {
     [githubToken] = parsedOptions.fgToken;
     isFineGrained = true;
   } else {
     githubToken = process.env.GITHUB_TOKEN || '';
+    isFineGrained = isFineGrainedToken(githubToken);
   }
 
   let depth: number = 1;
